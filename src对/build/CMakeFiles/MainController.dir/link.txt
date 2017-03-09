@@ -1,0 +1,1 @@
+/usr/bin/g++  -fPIC -O3 -msse2 -msse3 -Wall -std=c++11    -shared -Wl,-soname,libMainController.so -o devel/lib/libMainController.so CMakeFiles/MainController.dir/MainController.cpp.o  -L/usr/local/cuda/lib64 

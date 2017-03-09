@@ -1,0 +1,63 @@
+
+float transformColorLabel(vec4 col)
+{
+    vec4 res;
+
+    if (col.w==0.0f)
+    {
+	res.x = 1.0f;
+        res.y = 0.0f;
+        res.z = 0.0f;
+        res.w = col.w;
+    }
+    else if (col.w==5.0f)
+    {
+	res.x = 1.0f;
+        res.y = 1.0f;
+        res.z = 0.0f;
+        res.w = col.w;
+    }
+    else if (col.w==9.0f)
+    {
+	res.x = 0.0f;
+        res.y = 1.0f;
+        res.z = 0.0f;
+        res.w = col.w;
+    }
+    else if (col.w==12.0f)
+    {
+	res.x = 0.0f;
+        res.y = 1.0f;
+        res.z = 1.0f;
+        res.w = col.w;
+    }
+    else if (col.w==15.0f)
+    {
+	res.x = 0.0f;
+        res.y = 0.0f;
+        res.z = 1.0f;
+        res.w = col.w;
+    }
+    else if (col.w==16.0f)
+    {
+	res.x = 0.6275f;
+        res.y = 0.1255f;
+        res.z = 0.9412f;
+        res.w = col.w;
+    }
+    else
+    {
+	res.x = 1.0f;
+        res.y = 1.0f;
+        res.z = 1.0f;
+        res.w = col.w;
+    }
+
+    int rgb = int(round(res.x * 255.0f));
+    rgb = (rgb << 8) + int(round(res.y * 255.0f));
+    rgb = (rgb << 8) + int(round(res.z * 255.0f));
+    rgb = (rgb << 8) + int(round(res.w * 1.0f));
+
+    return float(rgb);
+}
+

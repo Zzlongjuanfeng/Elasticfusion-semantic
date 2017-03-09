@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/zxf/catkin_ws/src/rangeimage/build-src/devel/setup.sh

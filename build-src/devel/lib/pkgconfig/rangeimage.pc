@@ -1,0 +1,8 @@
+prefix=/home/zxf/catkin_ws/src/rangeimage/build-src/devel
+
+Name: rangeimage
+Description: Description of rangeimage
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/zxf/catkin_ws/src/rangeimage/build-src/devel/lib 
+Requires: 

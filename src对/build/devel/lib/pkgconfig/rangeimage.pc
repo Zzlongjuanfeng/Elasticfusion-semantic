@@ -1,0 +1,8 @@
+prefix=/home/kaffe/catkin_ws/src/rangeimage/src/build/devel
+
+Name: rangeimage
+Description: Description of rangeimage
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/kaffe/catkin_ws/src/rangeimage/src/build/devel/lib 
+Requires: 

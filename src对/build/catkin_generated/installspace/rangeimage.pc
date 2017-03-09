@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: rangeimage
+Description: Description of rangeimage
+Version: 0.0.0
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: 

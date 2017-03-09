@@ -1,0 +1,1 @@
+/usr/bin/g++  -fPIC   -Wno-deprecated    -shared -Wl,-soname,libgtest.so -o libgtest.so CMakeFiles/gtest.dir/src/gtest-all.cc.o  -L/usr/local/cuda/lib64  -L/home/kaffe/catkin_ws/src/rangeimage/src/build/gtest/src -lpthread -Wl,-rpath,/usr/local/cuda/lib64:/home/kaffe/catkin_ws/src/rangeimage/src/build/gtest/src 

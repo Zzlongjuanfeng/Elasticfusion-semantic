@@ -1,0 +1,174 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(rangeimage)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}")
+#unimportant qt-related
+#set(CMAKE_C_COMPILER /usr/bin/gcc-4.9)#
+#set(CMAKE_CXX_COMPILER /usr/bin/g++-4.9)#
+
+###########
+## Build ##
+###########
+
+find_package(PCL 1.5 REQUIRED)
+find_package(OpenCV 2.4.10 REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(Pangolin 0.1 REQUIRED)
+find_package(CUDA REQUIRED)
+find_package(OpenNI2 REQUIRED)
+#find_package(efusion REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs genmsg)
+
+
+#set(EFUSION_SOURCE_DIR /home/kaffe/catkin_ws/src/rangeimage/src) #/home/czhang/ElasticFusion/GUI/src) #/home/kaffe/xr/ElasticFusion/GUI/src)
+#find_path(EFUSION_INCLUDE_DIR ElasticFusion.h
+#          PATHS
+#            ${EFUSION_SOURCE_DIR}#/../../Core/src
+#          PATH_SUFFIXES Core
+#)
+
+#find_library(EFUSION_LIBRARY
+#             NAMES libefusion.so
+#             PATHS
+#               ${EFUSION_SOURCE_DIR}/../../Core/build
+#               ${EFUSION_SOURCE_DIR}/../../Core/src/build
+#             PATH_SUFFIXES ${EFUSION_PATH_SUFFIXES}
+#)
+
+#set(EFUSION_INCLUDE_DIR ${EFUSION_INCLUDE_DIR})
+#set(EFUSION_LIBRARY ${EFUSION_LIBRARY})
+set(SHADER_DIR "/home/zxf/catkin_ws/src/rangeimage/src/Shaders" CACHE PATH "Where the shaders live")
+set(EFUSION_INCLUDE_DIR /home/zxf/catkin_ws/src/rangeimage/src/Tools /home/zxf/catkin_ws/src/rangeimage/src/Shaders /home/zxf/catkin_ws/src/rangeimage/src/Utils)
+
+include_directories(${ZLIB_INCLUDE_DIR})
+include_directories(${EIGEN_INCLUDE_DIRS})
+include_directories(${Pangolin_INCLUDE_DIRS})
+include_directories(${CUDA_INCLUDE_DIRS})
+include_directories(${EFUSION_INCLUDE_DIR})
+
+catkin_package(
+)
+
+
+file(GLOB srcs src/*.cpp)
+file(GLOB tools_srcs src/Tools/*.cpp)
+file(GLOB shaders_srcs src/Shaders/*.cpp)
+file(GLOB utils_srcs src/Utils/*.cpp)
+file(GLOB cuda src/Cuda/*.cu)
+file(GLOB containers src/Cuda/containers/*.cpp)
+
+include_directories(
+  /usr/include include  ${catkin_INCLUDE_DIRS}
+)
+
+CUDA_COMPILE(cuda_objs ${cuda})
+#不加的话报一堆错误
+set(CMAKE_CXX_FLAGS "-O3 -msse2 -msse3 -Wall -std=c++11")
+
+## Declare a C++ library
+ add_library(rangeimage_func
+   src/rangeimage_func.cpp
+ )
+ add_library(MainController
+   src/MainController.cpp
+ )
+
+
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+
+
+add_definitions(-Dlinux=1)
+
+add_executable (rangeimage
+               ${srcs}
+               ${tools_srcs}
+               ${shaders_srcs}
+               ${utils_srcs}
+               ${cuda}
+               ${cuda_objs}
+               ${containers}
+               src/rangeimage.cpp
+               src/rangeimage_func.cpp
+               src/MainController.cpp)
+
+target_link_libraries (rangeimage
+                      ${PCL_LIBRARIES}
+                      ${ZLIB_LIBRARY}
+                      ${Pangolin_LIBRARIES}
+                      ${CUDA_LIBRARIES}
+                      ${EFUSION_LIBRARY}
+                      ${OPENNI2_LIBRARY}
+                      ${catkin_LIBRARIES}
+                                        rangeimage_func
+                                        MainController
+                                        /usr/lib/x86_64-linux-gnu/libcholmod.so
+                                        /usr/local/lib/libopencv_imgproc.so
+                                        /usr/local/lib/libopencv_core.so
+                                        /usr/local/lib/libopencv_highgui.so)
+
+## Add cmake target dependencies of the library
+## as an example, code may need to be generated before libraries
+## either from message generation or dynamic reconfigure
+# add_dependencies(rangeimage ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+## Declare a C++ executable
+# add_executable(rangeimage_node src/rangeimage_node.cpp)
+
+## Add cmake target dependencies of the executable
+## same as for the library above
+# add_dependencies(rangeimage_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+## Specify libraries to link a library or executable target against
+# target_link_libraries(rangeimage_node
+#   ${catkin_LIBRARIES}
+# )
+
+#############
+## Install ##
+#############
+
+# all install targets should use catkin DESTINATION variables
+# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
+
+## Mark executable scripts (Python etc.) for installation
+## in contrast to setup.py, you can choose the destination
+# install(PROGRAMS
+#   scripts/my_python_script
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+
+## Mark executables and/or libraries for installation
+# install(TARGETS rangeimage rangeimage_node
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+
+## Mark cpp header files for installation
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#   FILES_MATCHING PATTERN "*.h"
+#   PATTERN ".svn" EXCLUDE
+# )
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+# install(FILES
+#   # myfile1
+#   # myfile2
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
+
+#############
+## Testing ##
+#############
+
+## Add gtest based cpp test target and link libraries
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_rangeimage.cpp)
+# if(TARGET ${PROJECT_NAME}-test)
+#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+# endif()
+
+## Add folders to be run by python nosetests
+# catkin_add_nosetests(test)

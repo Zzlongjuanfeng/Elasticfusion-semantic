@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/kaffe/catkin_ws/src/rangeimage/src/build/devel/setup.sh

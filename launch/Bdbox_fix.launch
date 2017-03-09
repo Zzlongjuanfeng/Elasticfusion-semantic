@@ -1,0 +1,5 @@
+<launch>
+ 
+  <node name="rangeimage" pkg="rangeimage" type="rangeimage" output="screen"/>
+ 
+</launch>

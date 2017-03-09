@@ -1,0 +1,331 @@
+
+	    vec4 a = decodeColor(vColor[0].x);
+	    if (flagslam == 0)
+	    {
+	    }
+	    else
+	    {
+    		vColor[0].x = transformColorLabel(a);
+	    }
+            vec4 b = decodeColor(vColor[0].x);
+            vColor0 = b.xyz;
+	    float label = a.w;
+	    vColor0 = a.xyz;
+	    //vec4 res = decodeColor(rgb);
+	    //vColor0 = res.xyz;
+
+
+            vec4 a = decodeColor(vColor[0].x);
+	    float label = a.w;
+	    vColor0 = a.xyz;
+
+/*
+ * This file is part of ElasticFusion.
+ *
+ * Copyright (C) 2015 Imperial College London
+ * 
+ * The use of the code within this file and all code within files that 
+ * make up the software that is ElasticFusion is permitted for 
+ * non-commercial purposes only.  The full terms and conditions that 
+ * apply to the code within this file are detailed within the LICENSE.txt 
+ * file and at <http://www.imperial.ac.uk/dyson-robotics-lab/downloads/elastic-fusion/elastic-fusion-license/> 
+ * unless explicitly stated.  By downloading this file you agree to 
+ * comply with these terms.
+ *
+ * If you wish to use any of this code for commercial purposes then 
+ * please email researchcontracts.engineering@imperial.ac.uk.
+ *
+ */
+
+//if (c.w*255.0f==20.0f)
+//{
+//    rgb = int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==50.0f)
+//{
+//    rgb = int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==90.0f)
+//{
+//    rgb = int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==120.0f)
+//{
+//    rgb = int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==150.0f)
+//{
+//    rgb = int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==160.0f)
+//{
+//    rgb = int(round(0.5f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.1255f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.9412f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else //if (c.w*255.0f==0.0f)
+//{
+    rgb = int(round(c.x * 255.0f));
+    rgb = (rgb << 8) + int(round(c.y * 255.0f));
+    rgb = (rgb << 8) + int(round(c.z * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+float encodeColor(vec4 c)
+{
+    int rgb;
+if (c.w*255.0f==20.0f)
+{
+    rgb = int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if (c.w*255.0f==50.0f)
+{
+    rgb = int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if (c.w*255.0f==90.0f)
+{
+    rgb = int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if (c.w*255.0f==120.0f)
+{
+    rgb = int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if (c.w*255.0f==150.0f)
+{
+    rgb = int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if (c.w*255.0f==160.0f)
+{
+    rgb = int(round(0.5f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.1255f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.9412f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else //if (c.w*255.0f==0.0f)
+{
+    rgb = int(round(c.x * 255.0f));
+    rgb = (rgb << 8) + int(round(c.y * 255.0f));
+    rgb = (rgb << 8) + int(round(c.z * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+    return float(rgb);
+}
+
+vec4 decodeColor(float c)
+{
+    vec4 col;
+
+    col.x = float(int(c) >> 24 & 0xFF) / 255.0f;
+    col.y = float(int(c) >> 16 & 0xFF) / 255.0f;
+    col.z = float(int(c) >> 8 & 0xFF) / 255.0f;
+    col.w = float(int(c) & 0xFF) / 255.0f;
+
+    return col;
+}
+
+
+float transformColorLabel(vec4 c)
+{
+    int rgb;
+
+if ((c.w*255.0f>10.0f)&&(c.w*255.0f<30.0f))
+{
+    rgb = int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if ((c.w*255.0f>40.0f)&&(c.w*255.0f<60.0f))
+{
+    rgb = int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if ((c.w*255.0f>80.0f)&&(c.w*255.0f<100.0f))
+{
+    rgb = int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if ((c.w*255.0f>110.0f)&&(c.w*255.0f<130.0f))
+{
+    rgb = int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if ((c.w*255.0f>140.0f)&&(c.w*255.0f<155.0f))
+{
+    rgb = int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if ((c.w*255.0f>155.0f)&&(c.w*255.0f<170.0f))
+{
+    rgb = int(round(0.5f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.1255f * 255.0f));
+    rgb = (rgb << 8) + int(round(0.9412f * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else if ((c.w*255.0f>-10.0f)&&(c.w*255.0f<10.0f))
+{
+    //return 1.0f;
+    rgb = int(round(c.x * 255.0f));
+    rgb = (rgb << 8) + int(round(c.y * 255.0f));
+    rgb = (rgb << 8) + int(round(c.z * 255.0f));
+    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+}
+else
+{
+    return 1.0f;
+}
+
+    return float(rgb);
+}
+
+
+
+
+
+
+
+//if (c.w*255.0f==20.0f)
+//{
+//    rgb = int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==50.0f)
+//{
+//    rgb = int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==90.0f)
+//{
+//    rgb = int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==120.0f)
+//{
+//    rgb = int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==150.0f)
+//{
+//    rgb = int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(1.0f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else if (c.w*255.0f==160.0f)
+//{
+//    rgb = int(round(0.5f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.1255f * 255.0f));
+//    rgb = (rgb << 8) + int(round(0.9412f * 255.0f));
+//    rgb = (rgb << 8) + int(round(c.w * 255.0f));
+//}
+//else //if (c.w*255.0f==0.0f)
+//{
+
+float transformColorLabel(vec4 col)
+{
+    vec4 res;
+
+    if (col.w==0.0f)
+    {
+	res.x = 1.0f;
+        res.y = 0.0f;
+        res.z = 0.0f;
+        res.w = col.w;
+    }
+    else if (col.w==5.0f)
+    {
+	res.x = 1.0f;
+        res.y = 1.0f;
+        res.z = 0.0f;
+        res.w = col.w;
+    }
+    else if (col.w==9.0f)
+    {
+	res.x = 0.0f;
+        res.y = 1.0f;
+        res.z = 0.0f;
+        res.w = col.w;
+    }
+    else if (col.w==12.0f)
+    {
+	res.x = 0.0f;
+        res.y = 1.0f;
+        res.z = 1.0f;
+        res.w = col.w;
+    }
+    else if (col.w==15.0f)
+    {
+	res.x = 0.0f;
+        res.y = 0.0f;
+        res.z = 1.0f;
+        res.w = col.w;
+    }
+    else if (col.w==16.0f)
+    {
+	res.x = 0.6275f;
+        res.y = 0.1255f;
+        res.z = 0.9412f;
+        res.w = col.w;
+    }
+    else
+    {
+	res.x = 1.0f;
+        res.y = 1.0f;
+        res.z = 1.0f;
+        res.w = col.w;
+    }
+
+    int rgb = int(round(res.x * 255.0f));
+    rgb = (rgb << 8) + int(round(res.y * 255.0f));
+    rgb = (rgb << 8) + int(round(res.z * 255.0f));
+    rgb = (rgb << 8) + int(round(res.w * 1.0f));
+
+    return float(rgb);
+}
+
